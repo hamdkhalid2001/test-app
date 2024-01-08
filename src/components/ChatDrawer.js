@@ -171,8 +171,7 @@ function ChatDrawer({
     function pump() {
       return reader.read().then(({ value, done }) => {
         if (done) {
-          console.log("All suggestion: ",allSuggestions)
-          if(allSuggestions.length){
+          if (allSuggestions.length) {
             setChatLog((prevLog) => {
               const nextLog = prevLog.map((x) => ({ ...x }));
               nextLog.push({
@@ -214,8 +213,7 @@ function ChatDrawer({
         return pump();
       });
     }
-    console.log("All suggestions: ",allSuggestions)
-    
+
     return pump();
   };
 
@@ -328,6 +326,11 @@ function ChatDrawer({
       setInput(e.target.value);
     }
   };
+
+  const changeTemperature = (temperature) => {
+    if(loading) return;
+    setTemperature(temperature);
+  }
   return (
     <>
       <div className={`drawer-main active`}>
@@ -335,9 +338,8 @@ function ChatDrawer({
         <div
           className="chat-wrapper"
           style={{
-            background: `linear-gradient(${
-              bgGradient ? bgGradient.join(", ") : ""
-            })`,
+            background: `linear-gradient(${bgGradient ? bgGradient.join(", ") : ""
+              })`,
           }}
         >
           {showClose !== false && (
@@ -362,7 +364,28 @@ function ChatDrawer({
             </div>
           )}
           <div className="chat-main">
+
             <div className="innerChat">
+              {chatLog.length > 0 && <ul className="chatType">
+                <li onClick={() => changeTemperature(0)}>
+                  <button className={temperature === 0 ? "active": ""}>
+                    <small>More</small>
+                    <span>Creative</span>
+                  </button>
+                </li>
+                <li onClick={() => changeTemperature(1)}>
+                  <button className={temperature === 1 ? "active": ""}>
+                    <small>More</small>
+                    <span>Balanced</span>
+                  </button>
+                </li>
+                <li onClick={() => changeTemperature(2)}>
+                  <button className={temperature === 2 ? "active": ""}>
+                    <small>More</small>
+                    <span>Precise</span>
+                  </button>
+                </li>
+              </ul>}
               {chatLog?.map((chat, idx) => {
                 return (
                   <React.Fragment key={`chat_${idx}`}>
@@ -385,7 +408,14 @@ function ChatDrawer({
                       upVote={() => submitFeedback(true)}
                       onClickEvent={onClickEvent}
                     />}
-                    {chat?.suggestions?.length && JSON.stringify(chat?.suggestions)}
+                    <div className="cta_suggestions">
+                      {
+                        chat?.suggestions?.map((suggestion, idx) => {
+                          return <button onClick={() => sendPromptMessage(suggestion)} key={`sugge_btn_${idx}`}> {suggestion}</button>
+
+                        })
+                      }
+                    </div>
                     {idx === 0 &&
                       quickPrompts?.map((prompt, idx) => (
                         <div className="cta-faqs" key={`quick_prompt_${idx}`}>
