@@ -396,8 +396,9 @@ function ChatDrawer({
                       chat={chat}
                       dateTimeColor={dateTimeColor}
                       isLastResponse={
+                        !loading &&
                         idx !== 0 &&
-                        idx === chatLog.length - 1 &&
+                        idx === chatLog.length - 2 && //Subtracting -2 because suggestions will be on last index
                         chat?.type === "ai"
                       }
                       key={`chat_${idx}`}
