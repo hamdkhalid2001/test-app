@@ -25,7 +25,7 @@ function ChatBotWrapper() {
 
   return (
     <ChatDrawer
-      apiKey={process.env.REACT_APP_API_KEY}
+      apiKey={"b621eb3f-0bd2-41d5-a48c-a8f8ab7d38f8"}
       userId={user}
       botId={botId}
       showClose={false}

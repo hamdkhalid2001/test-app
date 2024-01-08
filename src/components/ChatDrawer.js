@@ -92,11 +92,13 @@ function ChatDrawer({
             if (data && data.length) {
               const history = [];
               data.forEach((item) => {
-                history.push({
-                  type: "user",
-                  message: item.User,
-                  time: formatTimeStamps(timezone, item.Timestamp),
-                });
+                if(history.length > 0){
+                  history.push({
+                    type: "user",
+                    message: item.User,
+                    time: formatTimeStamps(timezone, item.Timestamp),
+                  });
+                }
 
                 history.push({
                   type: "ai",
