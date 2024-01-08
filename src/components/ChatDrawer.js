@@ -408,14 +408,14 @@ function ChatDrawer({
                       upVote={() => submitFeedback(true)}
                       onClickEvent={onClickEvent}
                     />}
-                    <div className="cta_suggestions">
+                    {chat?.suggestions?.length > 0 && <div className="cta_suggestions">
                       {
                         chat?.suggestions?.map((suggestion, idx) => {
                           return <button onClick={() => sendPromptMessage(suggestion)} key={`sugge_btn_${idx}`}> {suggestion}</button>
 
                         })
                       }
-                    </div>
+                    </div>}
                     {idx === 0 &&
                       quickPrompts?.map((prompt, idx) => (
                         <div className="cta-faqs" key={`quick_prompt_${idx}`}>
